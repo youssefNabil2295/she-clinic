@@ -4,10 +4,11 @@ import { useLang } from '../context/LangContext'
 import { useNavigate } from 'react-router-dom'  // ✅ أضف هذا
 
 // استيراد الصور من مجلد src/img/2/
-import offer1 from '../img/2/offer1.jpeg'
-import offer2 from '../img/2/offer 2.jpeg'
-import offer3 from '../img/2/offer 3.jpeg'
-import offer4 from '../img/2/WhatsApp Image 2026-05-09 at 4.07.13 PM.jpeg'
+import offer1 from '../../public/images/2/offer1.jpeg'
+import offer2 from '../../public/images/2/offer 2.jpeg'
+import offer3 from '../../public/images/2/offer 3.jpeg'
+import offer4 from '../../public/images/2/offer 4.jpeg'
+
 
 const BANNERS = [
   {

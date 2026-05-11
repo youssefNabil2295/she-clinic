@@ -26,9 +26,9 @@ export const DOCTOR = {
 }
 
 export const IMAGES = {
-  heroBg:      '/src/img/cover.jfif',
-  doctorHero:  '/src/img/cover2.jpg',
-  doctorAbout: '/src/img/logo2.jpeg.jpg',
+  heroBg:      '../../public/images/cover2.jpg',
+  doctorHero:  '../../public/images/cover2.jpg',
+  doctorAbout: '../../public/images/logo2.jpeg.jpg',
 }
 
 export const SERVICES = [

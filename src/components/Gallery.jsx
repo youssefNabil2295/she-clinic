@@ -3,12 +3,17 @@ import { useState, useEffect } from 'react'
 import { useLang } from '../context/LangContext'
 
 const DEFAULT_IMAGES = [
-  'https://images.unsplash.com/photo-1570172619644-dfd03ed5d881?w=800',
-  'https://images.unsplash.com/photo-1512290923902-8a9f81dc236c?w=800',
-  'https://images.unsplash.com/photo-1540555700478-4be289fbecef?w=800',
-  'https://images.unsplash.com/photo-1598440947619-2c35fc9aa908?w=800',
-  'https://images.unsplash.com/photo-1527799820374-dcf8d9d4a388?w=800',
-  'https://images.unsplash.com/photo-1600948836101-f9ffda59d250?w=800',
+  '/public/images/1.jpeg.jpg',
+  '/public/images/2.jpeg.jpg',
+  '/public/images/3.jpeg.jpg',
+  '/public/images/4.jpeg.jpg',
+  '/public/images/5.jpeg.jpg',
+  '/public/images/6.jpeg.jpg',
+  '/public/images/7.jpeg.jpg',
+  '/public/images/8.jpeg.jpg',
+  '/public/images/9.jpeg.jpg',
+  '/public/images/10.jpeg.jpg',
+
 ]
 
 export default function Gallery() {
