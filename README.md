@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 # 🦷 Dental Clinic Website
 
 React + Vite + Tailwind + HeroUI + Firebase
@@ -68,3 +69,6 @@ npx vercel
 =======
 # she-clinic
 >>>>>>> f1c4a68967801b72e95d38afc24757cdca7b17d8
+=======
+
+>>>>>>> fddff14fc32e03e61c91b1e3094f898424e3c378
