@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 🦷 Dental Clinic Website
 
 React + Vite + Tailwind + HeroUI + Firebase
@@ -64,3 +65,6 @@ public/
 npm run build
 npx vercel
 ```
+=======
+# she-clinic
+>>>>>>> f1c4a68967801b72e95d38afc24757cdca7b17d8
