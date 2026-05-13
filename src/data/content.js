@@ -26,18 +26,18 @@ export const DOCTOR = {
 }
 
 export const IMAGES = {
-  heroBg: './images/cover2.jpg',
-  doctorHero: './images/cover2.jpg',
-  doctorAbout: './images/logo2.jpeg.jpg',
+  heroBg: '/images/cover2.jpg',
+  doctorHero: '/images/cover2.jpg',
+  doctorAbout: '/images/logo2.jpeg.jpg',
 }
 
 export const VIDEOS = [
-  './videos/video1.mp4',
-  './videos/video2.mp4',
-  './videos/video3.mp4',
-  './videos/video4.mp4',
-  './videos/5.mp4',
-  './videos/6.mp4',
+  '/videos/video1.mp4',
+  '/videos/video2.mp4',
+  '/videos/video3.mp4',
+  '/videos/video4.mp4',
+  '/videos/5.mp4',
+  '/videos/6.mp4',
 ]
 
 export const SERVICES = [

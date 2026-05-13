@@ -4,11 +4,11 @@ import { useLang } from '../context/LangContext'
 import { motion } from 'framer-motion'
 
 const DEFAULT_IMAGES = [
-  './images/6.jpeg.jpg',
-  './images/7.jpeg.jpg',
-  './images/8.jpeg.jpg',
-  './images/9.jpeg.jpg',
-  './images/10.jpeg.jpg',
+  '/images/6.jpeg.jpg',
+  '/images/7.jpeg.jpg',
+  '/images/8.jpeg.jpg',
+  '/images/9.jpeg.jpg',
+  '/images/10.jpeg.jpg',
 ]
 
 export default function Gallery() {
