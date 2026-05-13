@@ -2,8 +2,9 @@
 import { DOCTOR } from '../data/content'
 
 export default function WhatsAppFloat() {
+  const phone = DOCTOR.phone.startsWith('0') ? DOCTOR.phone.substring(1) : DOCTOR.phone;
   return (
-    <a href={`https://wa.me/${DOCTOR.phone}`} target="_blank" rel="noopener noreferrer"
+    <a href={`https://api.whatsapp.com/send?phone=20${phone.startsWith('20') ? phone.substring(2) : phone}`} target="_blank" rel="noopener noreferrer"
       className="fixed bottom-6 left-6 z-50 w-14 h-14 rounded-full flex items-center justify-center shadow-xl hover:scale-110 transition-transform"
       style={{ background: '#25D366', boxShadow: '0 4px 20px rgba(37,211,102,.45)' }}>
       <svg viewBox="0 0 24 24" fill="white" className="w-7 h-7">

@@ -1,7 +1,8 @@
 // src/components/TopBanner.jsx
 import { useState, useEffect } from 'react'
 import { useLang } from '../context/LangContext'
-import { useNavigate } from 'react-router-dom'  // ✅ أضف هذا
+import { useNavigate } from 'react-router-dom'
+import { motion, AnimatePresence } from 'framer-motion'
 
 // استيراد الصور من مجلد src/img/2/
 import offer1 from '../../public/images/2/offer1.jpeg'
@@ -31,26 +32,37 @@ const BANNERS = [
 
 export default function TopBanner() {
   const { isAr } = useLang()
-  const navigate = useNavigate()  // ✅ أضف هذا
+  const navigate = useNavigate()
 
-  const [currentPair, setCurrentPair] = useState(0)
+  const [itemsPerSlide, setItemsPerSlide] = useState(2)
+  const [currentGroup, setCurrentGroup] = useState(0)
 
-  // تجميع الصور في أزواج (كل زوج = صورتين)
-  const pairs = []
-  for (let i = 0; i < BANNERS.length; i += 2) {
-    pairs.push(BANNERS.slice(i, i + 2))
+  // Check screen size
+  useEffect(() => {
+    const checkSize = () => {
+      setItemsPerSlide(window.innerWidth < 768 ? 1 : 2)
+    }
+    checkSize()
+    window.addEventListener('resize', checkSize)
+    return () => window.removeEventListener('resize', checkSize)
+  }, [])
+
+  // تجميع الصور في مجموعات (صورة للموبايل، صورتين للكمبيوتر)
+  const groups = []
+  for (let i = 0; i < BANNERS.length; i += itemsPerSlide) {
+    groups.push(BANNERS.slice(i, i + itemsPerSlide))
   }
 
   // التبديل التلقائي كل 5 ثواني
   useEffect(() => {
     const interval = setInterval(() => {
-      setCurrentPair((prev) => (prev + 1) % pairs.length)
+      setCurrentGroup((prev) => (prev + 1) % groups.length)
     }, 5000)
     return () => clearInterval(interval)
-  }, [pairs.length])
+  }, [groups.length])
 
-  const nextSlide = () => setCurrentPair((prev) => (prev + 1) % pairs.length)
-  const prevSlide = () => setCurrentPair((prev) => (prev - 1 + pairs.length) % pairs.length)
+  const nextSlide = () => setCurrentGroup((prev) => (prev + 1) % groups.length)
+  const prevSlide = () => setCurrentGroup((prev) => (prev - 1 + groups.length) % groups.length)
 
   // ✅ وظيفة للذهاب لقسم الحجز
   const goToBooking = () => {
@@ -71,33 +83,42 @@ export default function TopBanner() {
     }
   }
 
-  const currentImages = pairs[currentPair] || []
+  const currentImages = groups[currentGroup] || []
 
   return (
     <div className="relative w-full overflow-hidden z-40 px-2 pt-2" style={{ marginTop: '64px' }}>
-      <div className="relative rounded-xl overflow-hidden">
+      <div className="relative rounded-xl overflow-hidden bg-clinic-soft h-[400px] md:h-[600px]">
         
-        {/* صورتين جنب بعض */}
-        <div className="flex gap-2">
-          {currentImages.map((banner, idx) => (
-            <img
-              key={banner.id}
-              src={banner.image}
-              alt="Special offer"
-              className="w-1/2 h-[600px]  cursor-pointer rounded-lg hover:opacity-90 transition"
-              onClick={goToBooking}  // ✅ عند الضغط يودي لقسم الحجز
-            />
-          ))}
-          {/* لو الرقم فردي وخلصت الصور، نحط مكان فاضي */}
-          {currentImages.length === 1 && (
-            <div className="w-1/2 h-[500px] bg-clinic-soft rounded-lg flex items-center justify-center text-clinic-gray">
-              {isAr ? 'عرض قادم' : 'Coming Soon'}
-            </div>
-          )}
-        </div>
+        {/* الصور مع أنيميشن */}
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={currentGroup}
+            initial={{ opacity: 0, x: 50 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -50 }}
+            transition={{ duration: 0.5 }}
+            className="absolute inset-0 flex gap-2"
+          >
+            {currentImages.map((banner) => (
+              <img
+                key={banner.id}
+                src={banner.image}
+                alt="Special offer"
+                className={`${itemsPerSlide === 1 ? 'w-full' : 'w-1/2'} h-full object-cover cursor-pointer rounded-lg hover:opacity-90 transition`}
+                onClick={goToBooking}
+              />
+            ))}
+            {/* لو الرقم فردي وخلصت الصور في الديسكتوب، نحط مكان فاضي */}
+            {itemsPerSlide === 2 && currentImages.length === 1 && (
+              <div className="w-1/2 h-full bg-clinic-soft rounded-lg flex items-center justify-center text-clinic-gray">
+                {isAr ? 'عرض قادم' : 'Coming Soon'}
+              </div>
+            )}
+          </motion.div>
+        </AnimatePresence>
 
         {/* الأسهم */}
-        {pairs.length > 1 && (
+        {groups.length > 1 && (
           <>
             <button
               onClick={prevSlide}
@@ -115,14 +136,14 @@ export default function TopBanner() {
         )}
 
         {/* النقاط */}
-        {pairs.length > 1 && (
+        {groups.length > 1 && (
           <div className="absolute bottom-3 left-0 right-0 flex justify-center gap-2 z-10">
-            {pairs.map((_, idx) => (
+            {groups.map((_, idx) => (
               <button
                 key={idx}
-                onClick={() => setCurrentPair(idx)}
+                onClick={() => setCurrentGroup(idx)}
                 className={`h-2 rounded-full transition-all ${
-                  idx === currentPair ? 'bg-clinic-gold w-6' : 'bg-white/60 w-2'
+                  idx === currentGroup ? 'bg-gold w-6' : 'bg-white/60 w-2'
                 }`}
               />
             ))}

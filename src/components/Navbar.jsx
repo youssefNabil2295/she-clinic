@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useLang } from '../context/LangContext'
 import { NAV_LINKS } from '../data/content'
+import { motion, AnimatePresence } from 'framer-motion'
 
 export default function Navbar() {
   const { lang, isAr, toggle } = useLang()
@@ -47,8 +48,13 @@ export default function Navbar() {
   }
 
   return (
-    <header className={`fixed top-0 inset-x-0 z-50 transition-all duration-300 bg-white border-b-2 border-gold/50 ${scrolled ? 'shadow-md' : ''}`}>
-      <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+    <motion.header 
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.6, type: 'spring', stiffness: 100 }}
+      className={`fixed top-0 inset-x-0 z-50 transition-colors duration-500 ${scrolled ? 'bg-white/90 backdrop-blur-md shadow-lg border-b border-gold/30' : 'bg-white border-b-2 border-gold/10'}`}
+    >
+      <div className={`max-w-6xl mx-auto px-6 flex items-center justify-between transition-all duration-500 ${scrolled ? 'h-16' : 'h-24'}`}>
 
         <button onClick={goToHome} className="font-display font-bold text-navy text-xl hover:text-gold transition-colors">
           She Clinic
@@ -90,41 +96,59 @@ export default function Navbar() {
             <span>{isAr ? 'احجز الآن' : 'Book Now'}</span>
           </button>
 
-          <button onClick={() => setMenuOpen(!menuOpen)} className="md:hidden flex flex-col gap-1.5 p-1">
-            <span className={`block w-5 h-0.5 bg-navy transition-all ${menuOpen ? 'rotate-45 translate-y-2' : ''}`} />
-            <span className={`block w-5 h-0.5 bg-navy transition-all ${menuOpen ? 'opacity-0' : ''}`} />
-            <span className={`block w-5 h-0.5 bg-navy transition-all ${menuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
+          <button 
+            onClick={() => setMenuOpen(!menuOpen)} 
+            className="md:hidden flex flex-col justify-center items-center gap-[6px] w-10 h-10 focus:outline-none"
+            aria-label="Toggle Menu"
+          >
+            <span className={`block h-[3px] w-7 bg-black transition-all duration-300 ease-in-out rounded-full ${menuOpen ? 'rotate-45 translate-y-[9px]' : ''}`} />
+            <span className={`block h-[3px] w-7 bg-black transition-all duration-300 ease-in-out rounded-full ${menuOpen ? 'opacity-0' : ''}`} />
+            <span className={`block h-[3px] w-7 bg-black transition-all duration-300 ease-in-out rounded-full ${menuOpen ? '-rotate-45 -translate-y-[9px]' : ''}`} />
           </button>
         </div>
       </div>
 
       {/* Mobile Menu */}
-      {menuOpen && (
-        <div className="md:hidden bg-white border-t border-gold/30 px-6 py-5 flex flex-col gap-4">
-          <button onClick={() => handleNavigation('hero')} className={`text-navy/80 hover:text-gold font-medium ${isAr ? 'text-right' : 'text-left'}`}>
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.div 
+            initial={{ opacity: 0, y: -20, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -20, scale: 0.95 }}
+            transition={{ duration: 0.2 }}
+            className="md:hidden absolute top-full left-4 right-4 mt-2 bg-white rounded-2xl shadow-[0_20px_60px_rgb(0,0,0,0.1)] border border-gray-100 p-4 flex flex-col gap-2 z-50 overflow-hidden"
+          >
+          <button onClick={() => handleNavigation('hero')} className={`flex items-center gap-3 text-navy font-bold text-base py-3 px-4 rounded-xl hover:bg-clinic-soft transition-colors ${isAr ? 'flex-row-reverse text-right' : 'text-left'}`}>
+            <div className="w-1.5 h-1.5 rounded-full bg-gold"></div>
             {NAV_LINKS.find(l => l.hash === 'hero')?.[lang] || (isAr ? 'الرئيسية' : 'Home')}
           </button>
-          <button onClick={() => handleNavigation('about')} className={`text-navy/80 hover:text-gold font-medium ${isAr ? 'text-right' : 'text-left'}`}>
+          <button onClick={() => handleNavigation('about')} className={`flex items-center gap-3 text-navy font-bold text-base py-3 px-4 rounded-xl hover:bg-clinic-soft transition-colors ${isAr ? 'flex-row-reverse text-right' : 'text-left'}`}>
+            <div className="w-1.5 h-1.5 rounded-full bg-gold"></div>
             {NAV_LINKS.find(l => l.hash === 'about')?.[lang] || (isAr ? 'عن العيادة' : 'About')}
           </button>
-          <button onClick={() => handleNavigation('services')} className={`text-navy/80 hover:text-gold font-medium ${isAr ? 'text-right' : 'text-left'}`}>
+          <button onClick={() => handleNavigation('services')} className={`flex items-center gap-3 text-navy font-bold text-base py-3 px-4 rounded-xl hover:bg-clinic-soft transition-colors ${isAr ? 'flex-row-reverse text-right' : 'text-left'}`}>
+            <div className="w-1.5 h-1.5 rounded-full bg-gold"></div>
             {NAV_LINKS.find(l => l.hash === 'services')?.[lang] || (isAr ? 'الخدمات' : 'Services')}
           </button>
-          <button onClick={() => handleNavigation('gallery')} className={`text-navy/80 hover:text-gold font-medium ${isAr ? 'text-right' : 'text-left'}`}>
+          <button onClick={() => handleNavigation('gallery')} className={`flex items-center gap-3 text-navy font-bold text-base py-3 px-4 rounded-xl hover:bg-clinic-soft transition-colors ${isAr ? 'flex-row-reverse text-right' : 'text-left'}`}>
+            <div className="w-1.5 h-1.5 rounded-full bg-gold"></div>
             {NAV_LINKS.find(l => l.hash === 'gallery')?.[lang] || (isAr ? 'المعرض' : 'Gallery')}
           </button>
-          <button onClick={() => handleNavigation('booking')} className={`text-navy/80 hover:text-gold font-medium ${isAr ? 'text-right' : 'text-left'}`}>
+          <button onClick={() => handleNavigation('booking')} className={`flex items-center gap-3 text-navy font-bold text-base py-3 px-4 rounded-xl hover:bg-clinic-soft transition-colors ${isAr ? 'flex-row-reverse text-right' : 'text-left'}`}>
+            <div className="w-1.5 h-1.5 rounded-full bg-gold"></div>
             {NAV_LINKS.find(l => l.hash === 'booking')?.[lang] || (isAr ? 'الحجز' : 'Booking')}
           </button>
+          <div className="h-px bg-gray-100 my-1 w-full"></div>
           <button 
             onClick={() => handleNavigation('booking')}
-            className="font-bold text-sm px-5 py-2.5 rounded-lg text-center"
+            className="font-bold text-sm px-5 py-3 rounded-xl text-center w-full mt-1"
             style={{ backgroundColor: '#C9A84C', color: 'white' }}
           >
             ✨ {isAr ? 'احجز الآن' : 'Book Now'}
           </button>
-        </div>
-      )}
-    </header>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.header>
   )
 }

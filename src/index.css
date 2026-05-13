@@ -4,8 +4,14 @@
 
 @layer base {
   body {
-    background-color: #FFF9F0;  /* clinic-bg */
+    background: radial-gradient(circle at top left, #FFFDFB 0%, #FFF5E6 50%, #FFFDFB 100%);
+    background-color: #FFF9F0;  /* Fallback clinic-bg */
     color: #1A1A2E;             /* clinic-dark */
+    font-family: 'Inter', 'Cairo', sans-serif;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Cairo', sans-serif;
   }
   @keyframes marquee {
   0% {

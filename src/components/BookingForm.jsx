@@ -15,6 +15,15 @@ const CATEGORIES = {
 export default function BookingForm() {
   const { lang, isAr } = useLang()
   const [form, setForm] = useState(INIT)
+  
+  const getTodayString = () => {
+    const d = new Date()
+    const year = d.getFullYear()
+    const month = String(d.getMonth() + 1).padStart(2, '0')
+    const day = String(d.getDate()).padStart(2, '0')
+    return `${year}-${month}-${day}`
+  }
+  
   const [errors, setErrors] = useState({})
   const [success, setSuccess] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -30,6 +39,7 @@ export default function BookingForm() {
     if (!form.category)        e.category = t('required')
     if (!form.service)         e.service  = t('required')
     if (!form.date)            e.date     = t('required')
+    else if (form.date < getTodayString()) e.date = isAr ? 'لا يمكن الحجز بتاريخ قديم' : 'Cannot book a past date'
     if (!form.time)            e.time     = t('required')
     return e
   }
@@ -55,20 +65,22 @@ export default function BookingForm() {
       `🕐 الوقت: ${form.time}`,
       form.notes ? `📝 ملاحظات: ${form.notes}` : '',
       `─────────────────`,
-      `🆕 طلب جديد يرجى التواصل مع العميل لتأكيد الحجز`,
+      `🆕 طلب جديد يرجى تأكيد الحجز`,
     ].filter(Boolean).join('\n')
 
-    // ✅ الطريقة المضمونة لفتح واتساب (تعمل على PC وموبايل)
-    const phone = DOCTOR.phone
+    // ضبط الرقم بحيث يبدأ بكود الدولة (بدون أصفار في البداية)
+    const phoneStr = DOCTOR.phone.startsWith('0') ? DOCTOR.phone.substring(1) : DOCTOR.phone;
+    const phone = phoneStr.startsWith('20') ? phoneStr : `20${phoneStr.replace(/^0+/, '')}`;
+    
     const text = encodeURIComponent(msg)
     
-    // حاول تفتح web.whatsapp.com أولاً
-    const url = `https://web.whatsapp.com/send?phone=${phone}&text=${text}`
+    // استخدام الرابط العالمي اللي بيشتغل على الموبايل والكمبيوتر
+    const url = `https://api.whatsapp.com/send?phone=${phone}&text=${text}`
     
     // افتح في تبويب جديد
     const newWindow = window.open(url, '_blank')
     
-    // لو منعته الـ Popup blocker، اعرض رسالة للمستخدم
+    // لو منعته الـ Popup blocker
     if (!newWindow) {
       alert(isAr ? 'الرجاء السماح للنوافذ المنبثقة أو اضغط على الرابط: ' + url : 'Please allow popups or click the link: ' + url)
     }
@@ -77,29 +89,6 @@ export default function BookingForm() {
     setSuccess(true)
     setForm(INIT)
     setErrors({})
-
-    // رسالة تأكيد للعميل
-    setTimeout(() => {
-      const clientMsg = [
-        `✨ *شكراً لتواصلك مع شي كلينك* ✨`,
-        `─────────────────`,
-        `عزيزتي ${form.name}،`,
-        ``,
-        `تم استلام طلب حجزك بنجاح ✅`,
-        ``,
-        `📋 التفاصيل:`,
-        `📅 التاريخ: ${form.date}`,
-        `🕐 الوقت: ${form.time}`,
-        `💉 الخدمة: ${serviceName}`,
-        ``,
-        `📞 سيتم التواصل معك خلال ٢٤ ساعة لتأكيد الحجز.`,
-        ``,
-        `شكراً لثقتك بنا 💕`,
-      ].join('\n')
-      
-      const clientUrl = `https://web.whatsapp.com/send?phone=${form.phone}&text=${encodeURIComponent(clientMsg)}`
-      window.open(clientUrl, '_blank')
-    }, 1000)
   }
 
   function handleChange(field, val) {
@@ -163,7 +152,7 @@ export default function BookingForm() {
       </Field>
 
       <Field label={isAr ? 'التاريخ' : 'Date'} error={errors.date} required>
-        <input type="date" min={new Date().toISOString().split('T')[0]} value={form.date}
+        <input type="date" min={getTodayString()} value={form.date}
           onChange={e => handleChange('date', e.target.value)} 
           className={inputCls(errors.date)} />
       </Field>
@@ -209,20 +198,20 @@ export default function BookingForm() {
 
 function inputCls(error) {
   return [
-    'w-full bg-white border rounded-lg px-4 py-2.5 text-sm text-clinic-dark',
-    'focus:outline-none focus:border-clinic-gold focus:ring-1 focus:ring-clinic-gold transition-colors',
-    error ? 'border-red-400' : 'border-gray-200 hover:border-clinic-gold/60',
+    'w-full bg-gray-50 border-2 rounded-xl px-5 py-3.5 text-sm text-navy font-medium',
+    'focus:outline-none focus:border-gold focus:bg-white focus:ring-4 focus:ring-gold/10 transition-all duration-300',
+    error ? 'border-red-400 bg-red-50' : 'border-gray-100 hover:border-gold/30',
   ].join(' ')
 }
 
 function Field({ label, error, required, children, className = '' }) {
   return (
-    <div className={`flex flex-col gap-1.5 ${className}`}>
-      <label className="text-clinic-gray text-xs font-medium">
-        {label} {required && <span className="text-clinic-gold">*</span>}
+    <div className={`flex flex-col gap-2 ${className}`}>
+      <label className="text-navy font-bold text-sm">
+        {label} {required && <span className="text-gold">*</span>}
       </label>
       {children}
-      {error && <p className="text-red-500 text-xs">⚠ {error}</p>}
+      {error && <p className="text-red-500 text-xs font-medium mt-1">⚠ {error}</p>}
     </div>
   )
 }

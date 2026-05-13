@@ -1,19 +1,14 @@
 // src/components/Gallery.jsx
 import { useState, useEffect } from 'react'
 import { useLang } from '../context/LangContext'
+import { motion } from 'framer-motion'
 
 const DEFAULT_IMAGES = [
-  '/public/images/1.jpeg.jpg',
-  '/public/images/2.jpeg.jpg',
-  '/public/images/3.jpeg.jpg',
-  '/public/images/4.jpeg.jpg',
-  '/public/images/5.jpeg.jpg',
-  '/public/images/6.jpeg.jpg',
-  '/public/images/7.jpeg.jpg',
-  '/public/images/8.jpeg.jpg',
-  '/public/images/9.jpeg.jpg',
-  '/public/images/10.jpeg.jpg',
-
+  './images/6.jpeg.jpg',
+  './images/7.jpeg.jpg',
+  './images/8.jpeg.jpg',
+  './images/9.jpeg.jpg',
+  './images/10.jpeg.jpg',
 ]
 
 export default function Gallery() {
@@ -57,8 +52,14 @@ export default function Gallery() {
   }
 
   return (
-    <section id="gallery" className="py-16 md:py-20 bg-white">
-      <div className="max-w-5xl mx-auto px-6">
+    <section id="gallery" className="py-16 md:py-20 bg-white overflow-hidden">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.95 }}
+        whileInView={{ opacity: 1, scale: 1 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.7 }}
+        className="max-w-5xl mx-auto px-6"
+      >
         <div className="text-center mb-10">
           <h2 className="text-3xl md:text-4xl font-bold text-navy relative inline-block">
             {isAr ? 'معرض الأعمال' : 'Gallery'}
@@ -70,8 +71,8 @@ export default function Gallery() {
         <div className="relative group">
           {/* الصورة الرئيسية */}
           <div className="rounded-2xl overflow-hidden shadow-2xl bg-gray-100">
-            <img 
-              src={images[currentIndex]} 
+            <img
+              src={images[currentIndex]}
               alt={`Gallery ${currentIndex + 1}`}
               className="w-full h-96 md:h-[800px]  transition-all duration-300"
             />
@@ -97,9 +98,8 @@ export default function Gallery() {
               <button
                 key={idx}
                 onClick={() => goToImage(idx)}
-                className={`h-2 rounded-full transition-all duration-300 ${
-                  idx === currentIndex ? 'bg-gold w-6' : 'bg-gray-300 w-2 hover:bg-gold/50'
-                }`}
+                className={`h-2 rounded-full transition-all duration-300 ${idx === currentIndex ? 'bg-gold w-6' : 'bg-gray-300 w-2 hover:bg-gold/50'
+                  }`}
               />
             ))}
           </div>
@@ -110,8 +110,8 @@ export default function Gallery() {
           </div>
         </div>
 
-      
-      </div>
+
+      </motion.div>
     </section>
   )
 }
