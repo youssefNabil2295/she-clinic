@@ -3,13 +3,16 @@ export default {
   content: [
     './index.html',
     './src/**/*.{js,jsx,ts,tsx}',
+  ],
+  theme: {
+    extend: {
       fontFamily: {
         sans: ['Inter', 'Cairo', 'sans-serif'],
         display: ['Cairo', 'sans-serif'],
       },
       colors: {
-        'navy': '#1A1A2E',
-        'gold': '#D4AF37',
+        navy: '#1A1A2E',
+        gold: '#D4AF37',
         'clinic-gold': '#D4AF37',
         'clinic-gold-dark': '#B8962E',
         'clinic-gold-light': '#F0D38A',
