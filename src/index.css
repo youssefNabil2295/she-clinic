@@ -13,16 +13,15 @@
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Cairo', sans-serif;
   }
-  @keyframes marquee {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
 }
 
-.animate-marquee {
-  animation: marquee 15s linear infinite;
-}
+@layer utilities {
+  @keyframes marquee {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  .animate-marquee {
+    animation: marquee 15s linear infinite;
+  }
 }
