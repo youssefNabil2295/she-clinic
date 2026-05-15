@@ -61,21 +61,15 @@ export default function Navbar() {
         </button>
 
         <nav className="hidden md:flex items-center gap-8">
-          <button onClick={() => handleNavigation('hero')} className="text-navy/70 hover:text-gold text-sm font-medium transition-colors pb-0.5 hover:border-b-2 hover:border-gold">
-            {NAV_LINKS.find(l => l.hash === 'hero')?.[lang] || (isAr ? 'الرئيسية' : 'Home')}
-          </button>
-          <button onClick={() => handleNavigation('about')} className="text-navy/70 hover:text-gold text-sm font-medium transition-colors pb-0.5 hover:border-b-2 hover:border-gold">
-            {NAV_LINKS.find(l => l.hash === 'about')?.[lang] || (isAr ? 'عن العيادة' : 'About')}
-          </button>
-          <button onClick={() => handleNavigation('services')} className="text-navy/70 hover:text-gold text-sm font-medium transition-colors pb-0.5 hover:border-b-2 hover:border-gold">
-            {NAV_LINKS.find(l => l.hash === 'services')?.[lang] || (isAr ? 'الخدمات' : 'Services')}
-          </button>
-          <button onClick={() => handleNavigation('gallery')} className="text-navy/70 hover:text-gold text-sm font-medium transition-colors pb-0.5 hover:border-b-2 hover:border-gold">
-            {NAV_LINKS.find(l => l.hash === 'gallery')?.[lang] || (isAr ? 'المعرض' : 'Gallery')}
-          </button>
-          <button onClick={() => handleNavigation('booking')} className="text-navy/70 hover:text-gold text-sm font-medium transition-colors pb-0.5 hover:border-b-2 hover:border-gold">
-            {NAV_LINKS.find(l => l.hash === 'booking')?.[lang] || (isAr ? 'الحجز' : 'Booking')}
-          </button>
+          {NAV_LINKS.map((link) => (
+            <button
+              key={link.hash}
+              onClick={() => handleNavigation(link.hash)}
+              className="text-navy/70 hover:text-gold text-sm font-medium transition-colors pb-0.5 hover:border-b-2 hover:border-gold"
+            >
+              {link[lang]}
+            </button>
+          ))}
         </nav>
 
         <div className="flex items-center gap-3">
@@ -118,26 +112,16 @@ export default function Navbar() {
             transition={{ duration: 0.2 }}
             className="md:hidden absolute top-full left-4 right-4 mt-2 bg-white rounded-2xl shadow-[0_20px_60px_rgb(0,0,0,0.1)] border border-gray-100 p-4 flex flex-col gap-2 z-50 overflow-hidden"
           >
-          <button onClick={() => handleNavigation('hero')} className={`flex items-center gap-3 text-navy font-bold text-base py-3 px-4 rounded-xl hover:bg-clinic-soft transition-colors ${isAr ? 'flex-row-reverse text-right' : 'text-left'}`}>
-            <div className="w-1.5 h-1.5 rounded-full bg-gold"></div>
-            {NAV_LINKS.find(l => l.hash === 'hero')?.[lang] || (isAr ? 'الرئيسية' : 'Home')}
-          </button>
-          <button onClick={() => handleNavigation('about')} className={`flex items-center gap-3 text-navy font-bold text-base py-3 px-4 rounded-xl hover:bg-clinic-soft transition-colors ${isAr ? 'flex-row-reverse text-right' : 'text-left'}`}>
-            <div className="w-1.5 h-1.5 rounded-full bg-gold"></div>
-            {NAV_LINKS.find(l => l.hash === 'about')?.[lang] || (isAr ? 'عن العيادة' : 'About')}
-          </button>
-          <button onClick={() => handleNavigation('services')} className={`flex items-center gap-3 text-navy font-bold text-base py-3 px-4 rounded-xl hover:bg-clinic-soft transition-colors ${isAr ? 'flex-row-reverse text-right' : 'text-left'}`}>
-            <div className="w-1.5 h-1.5 rounded-full bg-gold"></div>
-            {NAV_LINKS.find(l => l.hash === 'services')?.[lang] || (isAr ? 'الخدمات' : 'Services')}
-          </button>
-          <button onClick={() => handleNavigation('gallery')} className={`flex items-center gap-3 text-navy font-bold text-base py-3 px-4 rounded-xl hover:bg-clinic-soft transition-colors ${isAr ? 'flex-row-reverse text-right' : 'text-left'}`}>
-            <div className="w-1.5 h-1.5 rounded-full bg-gold"></div>
-            {NAV_LINKS.find(l => l.hash === 'gallery')?.[lang] || (isAr ? 'المعرض' : 'Gallery')}
-          </button>
-          <button onClick={() => handleNavigation('booking')} className={`flex items-center gap-3 text-navy font-bold text-base py-3 px-4 rounded-xl hover:bg-clinic-soft transition-colors ${isAr ? 'flex-row-reverse text-right' : 'text-left'}`}>
-            <div className="w-1.5 h-1.5 rounded-full bg-gold"></div>
-            {NAV_LINKS.find(l => l.hash === 'booking')?.[lang] || (isAr ? 'الحجز' : 'Booking')}
-          </button>
+          {NAV_LINKS.map((link) => (
+            <button
+              key={link.hash}
+              onClick={() => handleNavigation(link.hash)}
+              className={`flex items-center gap-3 text-navy font-bold text-base py-3 px-4 rounded-xl hover:bg-clinic-soft transition-colors ${isAr ? 'flex-row-reverse text-right' : 'text-left'}`}
+            >
+              <div className="w-1.5 h-1.5 rounded-full bg-gold"></div>
+              {link[lang]}
+            </button>
+          ))}
           <div className="h-px bg-gray-100 my-1 w-full"></div>
           <button 
             onClick={() => handleNavigation('booking')}

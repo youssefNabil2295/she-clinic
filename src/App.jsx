@@ -1,34 +1,32 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Navbar        from './components/Navbar'
-import Footer        from './components/Footer'
+import Navbar from './components/Navbar'
+import Footer from './components/Footer'
 import WhatsAppFloat from './components/WhatsAppFloat'
-import Home          from './pages/Home'
-import Admin from './pages/Admin'
+import Home from './pages/Home'
 import ServiceDetails from './pages/ServiceDetails'
 import TopBanner from './components/TopBanner'
 
 
 export default function App() {
   return (
-    
+
     <BrowserRouter>
       <Navbar />
-      <TopBanner/>
+      <TopBanner />
       <main>
-      
+
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/admin" element={<Admin />} />
           <Route path="/service/:id" element={<ServiceDetails />} />
 
         </Routes>
-        
+
       </main>
-      
+
       <Footer />
-      
+
       <WhatsAppFloat />
-      
+
     </BrowserRouter>
   )
 }

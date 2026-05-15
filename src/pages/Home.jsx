@@ -1,10 +1,10 @@
 // src/pages/Home.jsx
 import { useEffect } from 'react'
 import Hero        from '../components/Hero'
-import About       from '../components/About'
 import Services    from '../components/Services'
 import Gallery     from '../components/Gallery'  
 import VideoGallery from '../components/VideoGallery'
+import Reviews     from '../components/Reviews'
 import BookingForm from '../components/BookingForm'
 import { useLang } from '../context/LangContext'
 import { UI }      from '../data/content'
@@ -19,11 +19,11 @@ export default function Home() {
   return (
     <>
       <Hero />
-      <About />
       <Services />
       <VideoGallery />
       <Gallery />      
       <div className="gold-divider" />
+      <Reviews />
       <section id="booking" className="bg-offwhite py-16 md:py-20">
         <div className="max-w-2xl mx-auto px-6">
           <div className="text-center mb-12">
