@@ -1,9 +1,9 @@
 // src/pages/ServiceDetails.jsx
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import { useLang } from '../context/LangContext'
 import { SERVICES, DOCTOR } from '../data/content'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 
 export default function ServiceDetails() {
   const { id } = useParams()
@@ -11,6 +11,9 @@ export default function ServiceDetails() {
   const navigate = useNavigate()
 
   const service = SERVICES.find(s => s.id === id)
+  
+  // State للسلايدر
+  const [activeImg, setActiveImg] = useState(0)
 
   // ✅ SEO — تحديث عنوان الصفحة والـ meta description لكل خدمة
   useEffect(() => {
@@ -52,6 +55,11 @@ export default function ServiceDetails() {
   }
 
   const instructions = service.instructions?.[lang] || []
+
+  // تحديد الصورة الحالية (سواء كانت مصفوفة أو صورة واحدة)
+  const currentImage = Array.isArray(service.priceImages) 
+    ? service.priceImages[activeImg] 
+    : service.priceImage;
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -102,36 +110,85 @@ export default function ServiceDetails() {
       <div className="max-w-4xl mx-auto px-6 py-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
 
-          {/* ===== صورة الأسعار ===== */}
+          {/* ===== صورة الأسعار (Slider Support) ===== */}
           <motion.div
             initial={{ opacity: 0, x: isAr ? 30 : -30 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
           >
-            <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
-              <div className="bg-gold/10 px-5 py-3 border-b border-gold/20 flex items-center gap-2">
-                <span className="text-xl">💰</span>
-                <h2 className="font-bold text-navy text-base">
-                  {isAr ? 'قائمة الأسعار' : 'Price List'}
-                </h2>
-              </div>
-              <div className="p-2">
-                <img
-                  src={service.priceImage}
-                  alt={isAr ? `أسعار ${service.name.ar}` : `${service.name.en} prices`}
-                  className="w-full rounded-xl object-contain max-h-[500px]"
-                  onError={(e) => {
-                    e.target.style.display = 'none'
-                    e.target.nextElementSibling.style.display = 'flex'
-                  }}
-                />
-                {/* Placeholder لما الصورة مش موجودة */}
-                <div
-                  className="hidden w-full h-64 flex-col items-center justify-center gap-3 text-navy/40 rounded-xl bg-gray-50 border-2 border-dashed border-gray-200"
-                >
-                  <span className="text-5xl">📋</span>
-                  <p className="text-sm font-medium">{isAr ? 'صورة الأسعار قريباً' : 'Price image coming soon'}</p>
+            <div className="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100">
+              <div className="bg-gold/10 px-5 py-3 border-b border-gold/20 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="text-xl">💰</span>
+                  <h2 className="font-bold text-navy text-base">
+                    {isAr ? 'قائمة الأسعار' : 'Price List'}
+                  </h2>
                 </div>
+                {/* عداد الصور إذا كان سلايدر */}
+                {Array.isArray(service.priceImages) && (
+                  <span className="text-[10px] font-bold bg-navy text-white px-2 py-0.5 rounded-full">
+                    {activeImg + 1} / {service.priceImages.length}
+                  </span>
+                )}
+              </div>
+              
+              <div className="p-3 relative group">
+                <div className="relative overflow-hidden rounded-xl bg-gray-50 min-h-[300px] flex items-center justify-center">
+                  <AnimatePresence mode="wait">
+                    <motion.img
+                      key={currentImage}
+                      src={currentImage}
+                      initial={{ opacity: 0, scale: 0.95 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 1.05 }}
+                      transition={{ duration: 0.3 }}
+                      alt={isAr ? `أسعار ${service.name.ar}` : `${service.name.en} prices`}
+                      className="w-full h-auto object-contain max-h-[600px] rounded-lg shadow-sm"
+                      onError={(e) => {
+                        e.target.style.display = 'none'
+                        e.target.nextElementSibling.style.display = 'flex'
+                      }}
+                    />
+                    {/* Placeholder لما الصورة مش موجودة */}
+                    <div
+                      className="hidden absolute inset-0 flex-col items-center justify-center gap-3 text-navy/40 bg-gray-50 border-2 border-dashed border-gray-200 rounded-lg"
+                    >
+                      <span className="text-5xl">📋</span>
+                      <p className="text-sm font-medium">{isAr ? 'صورة الأسعار قريباً' : 'Price image coming soon'}</p>
+                    </div>
+                  </AnimatePresence>
+
+                  {/* أزرار التنقل (فقط إذا كان هناك مصفوفة صور) */}
+                  {Array.isArray(service.priceImages) && service.priceImages.length > 1 && (
+                    <>
+                      <button 
+                        onClick={() => setActiveImg(p => (p === 0 ? service.priceImages.length - 1 : p - 1))}
+                        className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-white/90 shadow-md rounded-full flex items-center justify-center text-navy hover:bg-gold hover:text-white transition-all opacity-0 group-hover:opacity-100"
+                      >
+                        {isAr ? '→' : '←'}
+                      </button>
+                      <button 
+                        onClick={() => setActiveImg(p => (p === service.priceImages.length - 1 ? 0 : p + 1))}
+                        className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 bg-white/90 shadow-md rounded-full flex items-center justify-center text-navy hover:bg-gold hover:text-white transition-all opacity-0 group-hover:opacity-100"
+                      >
+                        {isAr ? '←' : '→'}
+                      </button>
+                    </>
+                  )}
+                </div>
+
+                {/* مؤشرات النقط (Dots) */}
+                {Array.isArray(service.priceImages) && service.priceImages.length > 1 && (
+                  <div className="flex justify-center gap-1.5 mt-3">
+                    {service.priceImages.map((_, i) => (
+                      <button
+                        key={i}
+                        onClick={() => setActiveImg(i)}
+                        className={`w-1.5 h-1.5 rounded-full transition-all ${activeImg === i ? 'w-4 bg-gold' : 'bg-gray-300'}`}
+                      />
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           </motion.div>

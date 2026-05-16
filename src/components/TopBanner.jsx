@@ -4,31 +4,19 @@ import { useLang } from '../context/LangContext'
 import { useNavigate } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 
-// استيراد الصور من مجلد src/img/2/
-import offer1 from '../../public/images/2/offer1.jpeg'
-import offer2 from '../../public/images/2/offer 2.jpeg'
-import offer3 from '../../public/images/2/offer 3.jpeg'
-import offer4 from '../../public/images/2/offer 4.jpeg'
-
-
 const BANNERS = [
-  {
-    id: 1,
-    image: offer1,
-  },
-  {
-    id: 2,
-    image: offer2,
-  },
-  {
-    id: 3,
-    image: offer3,
-  },
-  {
-    id: 4,
-    image: offer4,
-  },
+  { id: 1, image: '/images/2/banner-1.jpeg' },
+  { id: 2, image: '/images/2/banner-2.jpeg' },
+  { id: 3, image: '/images/2/banner-3.jpeg' },
+  { id: 4, image: '/images/2/banner-4.jpeg' },
+  { id: 5, image: '/images/2/banner-5.jpg' },
+  { id: 6, image: '/images/2/banner-6.jpg' },
+  { id: 7, image: '/images/2/banner-7.jpg' },
+  { id: 8, image: '/images/2/banner-8.jpg' },
+  { id: 9, image: '/images/2/banner-9.jpeg' },
+  { id: 10, image: '/images/2/banner-10.jpg' },
 ]
+
 
 export default function TopBanner() {
   const { isAr } = useLang()
@@ -88,7 +76,7 @@ export default function TopBanner() {
   return (
     <div className="relative w-full overflow-hidden z-40 px-2 pt-2" style={{ marginTop: '64px' }}>
       <div className="relative rounded-xl overflow-hidden bg-clinic-soft h-[400px] md:h-[600px]">
-        
+
         {/* الصور مع أنيميشن */}
         <AnimatePresence mode="wait">
           <motion.div
@@ -142,9 +130,8 @@ export default function TopBanner() {
               <button
                 key={idx}
                 onClick={() => setCurrentGroup(idx)}
-                className={`h-2 rounded-full transition-all ${
-                  idx === currentGroup ? 'bg-gold w-6' : 'bg-white/60 w-2'
-                }`}
+                className={`h-2 rounded-full transition-all ${idx === currentGroup ? 'bg-gold w-6' : 'bg-white/60 w-2'
+                  }`}
               />
             ))}
           </div>
