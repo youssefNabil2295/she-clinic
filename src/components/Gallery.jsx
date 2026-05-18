@@ -103,7 +103,7 @@ export default function Gallery() {
             <div className="absolute inset-0 z-0">
               <img 
                 src={IMAGES[currentIndex]} 
-                alt="" 
+                alt={isAr ? 'نتائج العيادة' : 'Clinic Results'} 
                 className="w-full h-full object-cover blur-2xl opacity-30 scale-110"
               />
             </div>

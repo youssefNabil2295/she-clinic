@@ -108,7 +108,7 @@ export default function ClinicInterior() {
             <div className="absolute inset-0 z-0">
               <img 
                 src={CLINIC_IMAGES[currentIndex]} 
-                alt="" 
+                alt={isAr ? 'العيادة من الداخل' : 'Clinic Interior'} 
                 className="w-full h-full object-cover blur-2xl opacity-30 scale-110"
               />
             </div>
