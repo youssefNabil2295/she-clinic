@@ -7,6 +7,7 @@ import VideoGallery from '../components/VideoGallery'
 import ClinicInterior from '../components/ClinicInterior'
 import Reviews     from '../components/Reviews'
 import BookingForm from '../components/BookingForm'
+import LocationMap from '../components/LocationMap'
 import SEO         from '../components/SEO'
 import SchemaMarkup from '../components/SchemaMarkup'
 import { useLang } from '../context/LangContext'
@@ -72,6 +73,9 @@ export default function Home() {
           </motion.div>
         </div>
       </section>
+      
+      <LocationMap />
+      
       <div className="gold-divider" />
     </>
   )
