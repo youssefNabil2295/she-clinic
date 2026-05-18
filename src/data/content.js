@@ -42,6 +42,7 @@ export const VIDEOS = [
 export const SERVICES = [
   {
     id: 'kashf',
+    category: 'laser',
     icon: '🩺',
     name: { en: 'Consultations', ar: 'الكشوفات' },
     desc: { en: 'Expert skin & laser consultations.', ar: 'كشف متخصص لتقييم البشرة واختيار أنسب العلاجات.' },
@@ -66,7 +67,7 @@ export const SERVICES = [
     aftercare: {
       ar: [
         'لا توجد تعليمات خاصة لما بعد الكشف، يمكنك ممارسة حياتك الطبيعية فوراً.',
-        'يُفضل تطبيق أي روتين أو علاج يصفه الطبيب في نفس اليوم.'
+        'يفضل تطبيق أي روتين أو علاج يصفه الطبيب في نفس اليوم.'
       ],
       en: [
         'No specific aftercare instructions, you can resume normal activities immediately.',
@@ -76,6 +77,7 @@ export const SERVICES = [
   },
   {
     id: 'laser',
+    category: 'laser',
     icon: '⚡',
     name: { en: 'Laser Hair Removal', ar: 'ليزر إزالة الشعر' },
     desc: { en: 'Permanent hair removal with latest laser technology.', ar: 'إزالة الشعر نهائياً بأحدث أجهزة الليزر العالمية.' },
@@ -132,6 +134,7 @@ export const SERVICES = [
     }
   },
   {
+    category: 'skin',
     id: 'skin',
     icon: '🌿',
     name: { en: 'Skin Cleaning & Oxygeneo', ar: 'تنظيف البشرة والأوكسيجينيو' },
@@ -175,7 +178,8 @@ export const SERVICES = [
       ]
     }
   },
-  {
+  {category: 'skin',
+    
     id: 'dermapen',
     icon: '💉',
     name: { en: 'Dermapen', ar: 'الديرمابن' },
@@ -219,7 +223,8 @@ export const SERVICES = [
       ]
     }
   },
-  {
+  {category: 'injectables',
+    
     id: 'filler',
     icon: '👄',
     name: { en: 'Filler', ar: 'الفيلر' },
@@ -267,6 +272,7 @@ export const SERVICES = [
   },
   {
     id: 'botox',
+    category: 'injectables',
     icon: '✨',
     name: { en: 'Botox', ar: 'البوتوكس' },
     desc: { en: 'Smooth wrinkles and maintain a youthful look.', ar: 'تنعيم التجاعيد والحصول على مظهر شاب ومشرق.' },
@@ -307,6 +313,7 @@ export const SERVICES = [
   },
   {
     id: 'skin-booster',
+    category: 'injectables',
     icon: '💧',
     name: { en: 'Skin Booster', ar: 'الاسكين بوستر' },
     desc: { en: 'Deep hydration for glowing and refreshed skin.', ar: 'حقن الترطيب العميق للحصول على بشرة نضرة ولامعة.' },
@@ -351,6 +358,7 @@ export const SERVICES = [
   },
   {
     id: 'plasma',
+    category: 'injectables',
     icon: '🩸',
     name: { en: 'Plasma & Mesotherapy', ar: 'البلازما والميزوثيرابي' },
     desc: { en: 'Platelet-rich plasma for skin and hair rejuvenation.', ar: 'البلازما والميزوثيرابي لتجديد البشرة وعلاج تساقط الشعر.' },
@@ -391,6 +399,7 @@ export const SERVICES = [
   },
   {
     id: 'fractional',
+    category: 'laser',
     icon: '🌟',
     name: { en: 'Fractional Laser', ar: 'الفراكشنال ليزر' },
     desc: { en: 'Advanced laser for skin resurfacing and scar reduction.', ar: 'ليزر متطور لتجديد البشرة وتقليل المسام والندبات.' },
@@ -437,6 +446,7 @@ export const SERVICES = [
   },
   {
     id: 'peeling',
+    category: 'laser',
     icon: '🌸',
     name: { en: 'Chemical Peeling', ar: 'التقشير' },
     desc: { en: 'Chemical & laser peeling for skin renewal.', ar: 'تقشير كيميائي وليزر للحصول على بشرة متجددة وخالية من التصبغات.' },
@@ -483,6 +493,7 @@ export const SERVICES = [
   },
   {
     id: 'scars',
+    category: 'skin',
     icon: '🩹',
     name: { en: 'Scar Treatment', ar: 'تسليك الندبات' },
     desc: { en: 'Specialized treatment for subcision and skin texture improvement.', ar: 'علاج متخصص لتسليك الندبات وتحسين ملمس البشرة.' },

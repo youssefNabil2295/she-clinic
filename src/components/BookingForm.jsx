@@ -8,7 +8,7 @@ const INIT = { name: '', phone: '', category: '', service: '', date: '', time: '
 const CATEGORIES = {
   laser: { en: '🔬 Laser Treatments', ar: '🔬 علاجات الليزر' },
   skin:  { en: '💆‍♀️ Skin & Dermatology', ar: '💆‍♀️ البشرة والجلدية' },
-  surgery: { en: '✨ Plastic Surgery', ar: '✨ جراحات التجميل' },
+  
   injectables: { en: '💉 Injectables', ar: '💉 الحقن التجميلية' },
 }
 
@@ -51,7 +51,7 @@ export default function BookingForm() {
     setLoading(true)
 
     const categoryName = CATEGORIES[form.category]?.[lang] || form.category
-    const serviceObj = SERVICES.find(s => s.id === parseInt(form.service))
+    const serviceObj = SERVICES.find(s => s.id === form.service)
     const serviceName = serviceObj ? serviceObj.name[lang] : form.service
 
     const msg = [

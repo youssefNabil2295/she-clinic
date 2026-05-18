@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react'
 import { useParams, useNavigate, Link } from 'react-router-dom'
 import { useLang } from '../context/LangContext'
 import { SERVICES, DOCTOR } from '../data/content'
+import SEO from '../components/SEO'
 import { motion, AnimatePresence } from 'framer-motion'
 
 export default function ServiceDetails() {
@@ -15,35 +16,11 @@ export default function ServiceDetails() {
   // State للسلايدر
   const [activeImg, setActiveImg] = useState(0)
 
-  // ✅ SEO — تحديث عنوان الصفحة والـ meta description لكل خدمة
+  // ✅ تحديث عنوان الصفحة والـ meta description لكل خدمة
   useEffect(() => {
-    if (service) {
-      // عنوان الصفحة
-      document.title = service.seoTitle[lang]
-
-      // meta description
-      let metaDesc = document.querySelector('meta[name="description"]')
-      if (!metaDesc) {
-        metaDesc = document.createElement('meta')
-        metaDesc.name = 'description'
-        document.head.appendChild(metaDesc)
-      }
-      metaDesc.content = service.seoDesc[lang]
-
-      // canonical
-      let canonical = document.querySelector('link[rel="canonical"]')
-      if (!canonical) {
-        canonical = document.createElement('link')
-        canonical.rel = 'canonical'
-        document.head.appendChild(canonical)
-      }
-      canonical.href = `${window.location.origin}/service/${service.id}`
-    }
-
-    return () => {
-      document.title = 'She Clinic | أفضل عيادة ليزر وتجميل في مصر'
-    }
-  }, [service, lang])
+    if (!service) return
+    window.scrollTo(0, 0)
+  }, [service])
 
   if (!service) {
     return (
@@ -63,6 +40,12 @@ export default function ServiceDetails() {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <SEO 
+        title={service.seoTitle[lang]}
+        description={service.seoDesc[lang]}
+        canonical={`https://www.sheclinic.com/service/${service.id}`}
+        ogImage={currentImage || '/images/logo1.jpg'}
+      />
 
       {/* Hero Section */}
       <div className="bg-gradient-to-br from-navy via-navy/95 to-navy/80 text-white pt-28 pb-16 px-6">
